@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Placas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0px;
+            background-color: #f9f9f9;
+        }
+
+     
+        .placa {
+            width: 763px;
+            height: 383px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            background-color: #d32f2f; 
+        }
+
+        .placa.country {
+            background-color: #ff5722; 
+        }
+
+        .faixa-amarela {
+            background-color: #ffeb3b;
+            width: 60%;
+            height: 67%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 260px;
+        }
+
+        .nome {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: inherit; 
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 00px;
+            font-size: clamp(30px, 8vw, 50px);
+        }
+
+        .paralelogramo {
+            background-color: white;
+            width: 300px;
+            height: 130px;
+            transform: skewX(-20deg);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+            margin-right: -180px;
+        }
+
+        .valor-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+        }
+
+        .valor-maior {
+            font-size: 75px; 
+            font-weight: bold;
+            color: #ff0000;
+            margin-right: 15px;
+        }
+
+        .valor-menor {
+            font-size: 30px; 
+            font-weight: bold;
+            color: #ff0000;
+            transform: translateY(-89px); 
+        }
+
+       
+        .placa .paralelogramo .valor-menor {
+            font-size: 50px; 
+            font-weight: bold;
+            color: #ff0000;
+            transform: translateY(-5px);
+        }
+
+        .cifrao {
+            font-size: 55px;
+            font-weight: bold;
+            color: #ff0000;
+        }
+
+        .unidade {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 45px;
+            font-weight: bold;
+            color: rgb(255, 0, 0);
+        }
+
+        .logo {
+            position: absolute;
+            right: 500px;
+            bottom: 20px;
+            width: 190px; 
+            height: auto;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input,
+        select,
+        button {
+            margin: 5px;
+            padding: 9px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #d32f2f;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-size: 18px;
+            padding: 15px;
+        }
+
+        button:hover {
+            background-color: #b71c1c;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        Instruções para impressão: 
+    </h1>
+    <p>
+        após salvar as placas feitas, abra o word ajuste a margem para <b style="color: #ff0000;">0,60 cm</b> em todos os <b style="color: #ff0000;">4 lados (Superior,Esquerdo,Inferior,Direito),</b> cole copie e cole as placas feitas e <b style="color: #ff0000;">imprima em alta qualidade em papel sulfite.</b> (para plastificar depois).
+    </p>
+    <div class="controls">
+        <input type="text" id="nome" placeholder="Digite o nome (ex: Picanha)">
+        <input type="text" id="valor" placeholder="Digite o valor (ex: 9,98)">
+
+        <select id="fundo">
+            <option value="top">PLACA TOP</option>
+            <option value="country">PLACA CONTRY</option>
+        </select>
+
+        <select id="logo">
+            <option value="logo1.png">LOGO CONTRY </option>
+            <option value="logo2.png">LOGO TOP </option>
+        </select>
+    
+        <select id="unidade">
+            <option value="KG.">KG.</option>
+            <option value="PEÇA">PEÇA</option>
+            <option value="UNID.">UNIDADE</option>
+        </select>
+        <button onclick="atualizarPlaca()">FAZER PLACA</button>
+        <button onclick="salvarPlaca()">SALVAR IMAGEM</button>
+    </div>
+
+   
+    <div class="placa" id="placa">
+        <div class="nome" id="placaNome">PICANHA</div>
+        <div class="faixa-amarela">
+            <div class="paralelogramo">
+                <span class="cifrao">R$:</span>
+                <div class="valor-container" id="placaValor">
+                    <span class="valor-maior" id="placaValorReais">98</span>
+                    <span class="valor-menor" id="placaValorCentavos">,98</span>
+                </div>
+            </div>
+        </div>
+        <div class="unidade" id="placaUnidade">KG.</div>
+        
+        <img class="logo" id="placaLogo" src="logo1.png" alt="Logo">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        function atualizarPlaca() {
+            const nome = document.getElementById('nome').value;
+            const valor = document.getElementById('valor').value;
+            const unidade = document.getElementById('unidade').value;
+            const logo = document.getElementById('logo').value;
+            const fundo = document.getElementById('fundo').value;
+
+            
+            document.getElementById('placaNome').innerText = nome.toUpperCase();
+            document.getElementById('placaUnidade').innerText = unidade;
+
+       
+            document.getElementById('placaLogo').src = logo;
+
+           
+            const placa = document.getElementById('placa');
+            if (fundo === 'top') {
+                placa.classList.remove('country');
+            } else if (fundo === 'country') {
+                placa.classList.add('country');
+            }
+
+           
+            let partes = valor.replace(',', '.').split('.');
+            let reais = partes[0] || '';  
+            let centavos = partes[1] ? partes[1].padEnd(2, '0') : '00'; 
+
+          
+            if (reais) {
+                document.getElementById('placaValorReais').innerText = reais;
+                document.getElementById('placaValorCentavos').innerText = `,${centavos}`;
+            } else {
+                document.getElementById('placaValorReais').innerText = '';
+                document.getElementById('placaValorCentavos').innerText = centavos;
+            }
+        }
+
+        function salvarPlaca() {
+            html2canvas(document.getElementById("placa")).then(function (canvas) {
+                let link = document.createElement('a');
+                link.download = 'placa.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+    </script>
+</body>
+
+</html>
