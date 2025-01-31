@@ -212,51 +212,45 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        function atualizarPlaca() {
-            const nome = document.getElementById('nome').value;
-            const valor = document.getElementById('valor').value;
-            const unidade = document.getElementById('unidade').value;
-            const logo = document.getElementById('logo').value;
-            const fundo = document.getElementById('fundo').value;
+   function atualizarPlaca() {
+        const nome = document.getElementById('nome').value;
+        const valor = document.getElementById('valor').value;
+        const unidade = document.getElementById('unidade').value;
+        const logo = document.getElementById('logo').value;
+        const fundo = document.getElementById('fundo').value;
 
-            
-            document.getElementById('placaNome').innerText = nome.toUpperCase();
-            document.getElementById('placaUnidade').innerText = unidade;
+        document.getElementById('placaNome').innerText = nome.toUpperCase();
+        document.getElementById('placaUnidade').innerText = unidade;
+        document.getElementById('placaLogo').src = logo;
 
-       
-            document.getElementById('placaLogo').src = logo;
-
-           
-            const placa = document.getElementById('placa');
-            if (fundo === 'top') {
-                placa.classList.remove('country');
-            } else if (fundo === 'country') {
-                placa.classList.add('country');
-            }
-
-           
-            let partes = valor.replace(',', '.').split('.');
-            let reais = partes[0] || '';  
-            let centavos = partes[1] ? partes[1].padEnd(2, '0') : '00'; 
-
-          
-            if (reais) {
-                document.getElementById('placaValorReais').innerText = reais;
-                document.getElementById('placaValorCentavos').innerText = `,${centavos}`;
-            } else {
-                document.getElementById('placaValorReais').innerText = '';
-                document.getElementById('placaValorCentavos').innerText = centavos;
-            }
+        const placa = document.getElementById('placa');
+        if (fundo === 'top') {
+            placa.classList.remove('country');
+        } else if (fundo === 'country') {
+            placa.classList.add('country');
         }
+
+        let partes = valor.replace(',', '.').split('.');
+        let reais = partes[0] || '';  
+        let centavos = partes[1] ? partes[1].padEnd(2, '0') : '00'; 
+
+        if (reais) {
+            document.getElementById('placaValorReais').innerText = reais;
+            document.getElementById('placaValorCentavos').innerText = `,${centavos}`;
+        } else {
+            document.getElementById('placaValorReais').innerText = '';
+            document.getElementById('placaValorCentavos').innerText = centavos;
+        }
+    }
 
         function salvarPlaca() {
-            html2canvas(document.getElementById("placa")).then(function (canvas) {
-                let link = document.createElement('a');
-                link.download = 'placa.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        }
+        html2canvas(document.getElementById("placa"), { scale: 2 }).then(function (canvas) {
+            let link = document.createElement('a');
+            link.download = 'placa.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    }
     </script>
 </body>
 
