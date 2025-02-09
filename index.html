@@ -4,11 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://img.icons8.com/?size=100&id=rkfnhZcafDHy&format=png&color=000000">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="https://img.icons8.com/?size=100&id=rkfnhZcafDHy&format=png&color=000000">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <title>Gerador de Placas</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Roboto", serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -16,18 +21,17 @@
             background-color: #f9f9f9;
         }
 
-     
         .placa {
             width: 763px;
             height: 383px;
             border-radius: 20px;
             position: relative;
             overflow: hidden;
-            background-color: #d32f2f; 
+            background-color: #d32f2f;
         }
 
         .placa.country {
-            background-color: #ff5722; 
+            background-color: #ff5722;
         }
 
         .faixa-amarela {
@@ -46,34 +50,41 @@
         }
 
         .nome {
+            font-family: "Roboto", serif;
             position: absolute;
-            top: 15px;
-            left: 0;
             width: 100%;
-            height: 30%;
             display: flex;
-            align-items: center;
+            padding-top: 2px;
+            align-items: flex-start;
             justify-content: center;
-            background-color: inherit; 
+            background-color: inherit;
             color: white;
             font-weight: bold;
-            overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding: 0 00px;
-            font-size: clamp(30px, 8vw, 50px);
+            font-size: 35pt;
+            line-height: 1;
+            transform: scaleY(2.5);
+            transform-origin: top;
+            -webkit-text-stroke-width: 0px;
+            -webkit-text-stroke-color: #000;
+            font-size: 3em;
+            color: #ffffff;
+            box-shadow: #000;
+            text-shadow: black 0.1em 0.1em 0.2em
         }
 
         .paralelogramo {
             background-color: white;
-            width: 300px;
-            height: 130px;
+            width: 400px;
+            height: 160px;
             transform: skewX(-20deg);
             display: flex;
             align-items: center;
             justify-content: space-around;
-            padding: 0 20px;
-            margin-right: -180px;
+            padding: 0 30px;
+            margin-right: -237px;
+            margin-bottom: 30px;
         }
 
         .valor-container {
@@ -83,36 +94,35 @@
         }
 
         .valor-maior {
-            font-size: 75px; 
+            font-size: 120px;
             font-weight: bold;
             color: #ff0000;
-            margin-right: 15px;
+            margin-right: 20px;
         }
 
         .valor-menor {
-            font-size: 30px; 
+            font-size: 60px;
             font-weight: bold;
             color: #ff0000;
-            transform: translateY(-89px); 
+            transform: translateY(-65px);
+            margin-left: 20px;
         }
 
-       
-        .placa .paralelogramo .valor-menor {
-            font-size: 50px; 
-            font-weight: bold;
-            color: #ff0000;
-            transform: translateY(-5px);
+        .apenas-centavos .valor-menor {
+            transform: translateY(-46%);
+            font-size: 80px;
+            margin-left: 156px;
         }
 
         .cifrao {
-            font-size: 55px;
+            font-size: 114px;
             font-weight: bold;
             color: #ff0000;
         }
 
         .unidade {
             position: absolute;
-            bottom: 10px;
+            bottom: 2px;
             right: 20px;
             font-size: 45px;
             font-weight: bold;
@@ -123,7 +133,7 @@
             position: absolute;
             right: 500px;
             bottom: 20px;
-            width: 190px; 
+            width: 190px;
             height: auto;
         }
 
@@ -162,28 +172,31 @@
 
 <body>
     <h1>
-        Instruções para impressão: 
+        Instruções para impressão:
     </h1>
     <p>
-        após salvar as placas feitas, abra o word ajuste a margem para <b style="color: #ff0000;">0,60 cm</b> em todos os <b style="color: #ff0000;">4 lados (Superior,Esquerdo,Inferior,Direito),</b> cole copie e cole as placas feitas e <b style="color: #ff0000;">imprima em alta qualidade em papel sulfite.</b> (para plastificar depois).
+        após salvar as placas feitas, abra o word ajuste a margem para <b style="color: #ff0000;">0,60 cm</b> em todos
+        os <b style="color: #ff0000;">4 lados (Superior,Esquerdo,Inferior,Direito),</b> cole copie e cole as placas
+        feitas e <b style="color: #ff0000;">imprima em alta qualidade em papel sulfite.</b> (para plastificar depois).
     </p>
-        <p>
-        <b style="color: #ff0000;">Caso seja a placa maior</b> coloque as medidas: <b style="color: #ff0000;">13,87cm de altura e 27,62cm de largura.</b> 
+    <p>
+        <b style="color: #ff0000;">Caso seja a placa maior</b> coloque as medidas: <b style="color: #ff0000;">13,87cm de
+            altura e 27,62cm de largura.</b>
     </p>
     <div class="controls">
         <input type="text" id="nome" placeholder="Digite o nome (ex: Picanha)">
         <input type="text" id="valor" placeholder="Digite o valor (ex: 9,98)">
 
         <select id="fundo">
-            <option value="top">PLACA TOP</option>
+            <option value="top" selected>PLACA TOP</option>
             <option value="country">PLACA CONTRY</option>
         </select>
 
         <select id="logo">
+            <option value="logo2.png" selected>LOGO TOP </option>
             <option value="logo1.png">LOGO CONTRY </option>
-            <option value="logo2.png">LOGO TOP </option>
         </select>
-    
+
         <select id="unidade">
             <option value="KG.">KG.</option>
             <option value="PEÇA">PEÇA</option>
@@ -193,7 +206,7 @@
         <button onclick="salvarPlaca()">SALVAR IMAGEM</button>
     </div>
 
-   
+
     <div class="placa" id="placa">
         <div class="nome" id="placaNome">PICANHA</div>
         <div class="faixa-amarela">
@@ -206,51 +219,53 @@
             </div>
         </div>
         <div class="unidade" id="placaUnidade">KG.</div>
-        
-        <img class="logo" id="placaLogo" src="logo1.png" alt="Logo">
+
+        <img class="logo" id="placaLogo" src="logo2.png" alt="Logo">
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-   function atualizarPlaca() {
-        const nome = document.getElementById('nome').value;
-        const valor = document.getElementById('valor').value;
-        const unidade = document.getElementById('unidade').value;
-        const logo = document.getElementById('logo').value;
-        const fundo = document.getElementById('fundo').value;
+        function atualizarPlaca() {
+            const nome = document.getElementById('nome').value;
+            const valor = document.getElementById('valor').value;
+            const unidade = document.getElementById('unidade').value;
+            const logo = document.getElementById('logo').value;
+            const fundo = document.getElementById('fundo').value;
 
-        document.getElementById('placaNome').innerText = nome.toUpperCase();
-        document.getElementById('placaUnidade').innerText = unidade;
-        document.getElementById('placaLogo').src = logo;
+            document.getElementById('placaNome').innerText = nome.toUpperCase();
+            document.getElementById('placaUnidade').innerText = unidade;
+            document.getElementById('placaLogo').src = logo;
 
-        const placa = document.getElementById('placa');
-        if (fundo === 'top') {
-            placa.classList.remove('country');
-        } else if (fundo === 'country') {
-            placa.classList.add('country');
+            const placa = document.getElementById('placa');
+            if (fundo === 'top') {
+                placa.classList.remove('country');
+            } else if (fundo === 'country') {
+                placa.classList.add('country');
+            }
+
+            let partes = valor.replace(',', '.').split('.');
+            let reais = partes[0] || '';
+            let centavos = partes[1] ? partes[1].padEnd(2, '0') : '00';
+
+            const valorContainer = document.getElementById('placaValor');
+            if (reais) {
+                valorContainer.classList.remove('apenas-centavos');
+                document.getElementById('placaValorReais').innerText = reais;
+                document.getElementById('placaValorCentavos').innerText = `,${centavos}`;
+            } else {
+                valorContainer.classList.add('apenas-centavos');
+                document.getElementById('placaValorReais').innerText = '';
+                document.getElementById('placaValorCentavos').innerText = `,${centavos}`;
+            }
         }
-
-        let partes = valor.replace(',', '.').split('.');
-        let reais = partes[0] || '';  
-        let centavos = partes[1] ? partes[1].padEnd(2, '0') : '00'; 
-
-        if (reais) {
-            document.getElementById('placaValorReais').innerText = reais;
-            document.getElementById('placaValorCentavos').innerText = `,${centavos}`;
-        } else {
-            document.getElementById('placaValorReais').innerText = '';
-            document.getElementById('placaValorCentavos').innerText = centavos;
-        }
-    }
-
         function salvarPlaca() {
-        html2canvas(document.getElementById("placa"), { scale: 2 }).then(function (canvas) {
-            let link = document.createElement('a');
-            link.download = 'placa.png';
-            link.href = canvas.toDataURL();
-            link.click();
-        });
-    }
+            html2canvas(document.getElementById("placa"), { scale: 2 }).then(function (canvas) {
+                let link = document.createElement('a');
+                link.download = 'placa.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
     </script>
 </body>
 
